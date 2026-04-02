@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TVT | Ecommerce & Digital Marketing Solutions</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="header">
+        <nav class="container nav-container">
+            <div class="logo">TVT<span>.</span></div>
+            <ul class="nav-menu">
+                <li><a href="#home">Trang chủ</a></li>
+                <li><a href="#services">Dịch vụ</a></li>
+                <li><a href="#stats">Thành tựu</a></li>
+                <li><a href="#contact" class="btn-nav">Hợp tác</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container hero-wrapper">
+            <div class="hero-content">
+                <span class="badge">Agency Marketing Chuyên Nghiệp</span>
+                <h1>Nâng Tầm Doanh Nghiệp <br><span class="gold-text">Thương Mại Điện Tử</span></h1>
+                <p>TVT cung cấp giải pháp Digital Marketing toàn diện, tối ưu doanh thu trên các nền tảng Shopee, TikTok Shop và Lazada với chiến lược đột phá.</p>
+                <div class="btn-group">
+                    <a href="#contact" class="btn-gold">Bắt đầu ngay</a>
+                    <a href="#services" class="btn-outline">Tìm hiểu thêm</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stats" class="stats">
+        <div class="container stats-grid">
+            <div class="stat-card">
+                <h2 class="counter">500+</h2>
+                <p>Dự án triển khai</p>
+            </div>
+            <div class="stat-card">
+                <h2 class="counter">100+</h2>
+                <p>Thương hiệu đồng hành</p>
+            </div>
+            <div class="stat-card">
+                <h2 class="counter">200%</h2>
+                <p>Tăng trưởng trung bình</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="gold-text">Dịch vụ thế mạnh</span>
+                <h2>Giải pháp từ TVT</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-box">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>E-Commerce</h3>
+                    <p>Setup, vận hành và tối ưu gian hàng đa sàn. Chạy quảng cáo nội sàn hiệu quả cao.</p>
+                </div>
+                <div class="service-box active">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Digital Marketing</h3>
+                    <p>Facebook Ads, Google Ads & TikTok Ads tập trung vào chuyển đổi đơn hàng thực tế.</p>
+                </div>
+                <div class="service-box">
+                    <i class="fas fa-vnode"></i>
+                    <h3>Chiến lược thương hiệu</h3>
+                    <p>Tư vấn định vị, thiết kế nhận diện sang trọng, tối ưu trải nghiệm khách hàng.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container contact-wrapper">
+            <div class="contact-info">
+                <h2>Bạn cần tư vấn <br>chiến lược?</h2>
+                <p>Đội ngũ TVT luôn sẵn sàng lắng nghe và đưa ra giải pháp tối ưu nhất cho bài toán kinh doanh của bạn.</p>
+                <ul class="contact-list">
+                    <li><i class="fas fa-envelope"></i> admin@tvt.vn</li>
+                    <li><i class="fas fa-phone"></i> Hotline: 09xx xxx xxx</li>
+                    <li><i class="fas fa-map-marker-alt"></i> TP. Hồ Chí Minh, Việt Nam</li>
+                </ul>
+            </div>
+            <div class="contact-form">
+                <form action="#">
+                    <input type="text" placeholder="Họ và tên" required>
+                    <input type="email" placeholder="Email của bạn" required>
+                    <textarea placeholder="Nội dung cần tư vấn" rows="5"></textarea>
+                    <button type="submit" class="btn-gold-full">Gửi yêu cầu</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 TVT Agency. Thịnh Vượng Cùng Kỷ Nguyên Số Hoá và AI.</p>
+    </footer>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script>
+        const sr = ScrollReveal({
+            distance: '60px',
+            duration: 2500,
+            delay: 400,
+            reset: true
+        });
+
+        sr.reveal('.hero-content', {delay: 200, origin: 'top'});
+        sr.reveal('.service-box', {interval: 200, origin: 'bottom'});
+        sr.reveal('.stat-card', {interval: 100, origin: 'left'});
+        sr.reveal('.contact-info', {origin: 'left'});
+        sr.reveal('.contact-form', {origin: 'right'});
+    </script>
+</body>
+</html>
