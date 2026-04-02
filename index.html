@@ -123,5 +123,118 @@
         sr.reveal('.contact-info', {origin: 'left'});
         sr.reveal('.contact-form', {origin: 'right'});
     </script>
+
+    <!-- Chatbot Widget -->
+    <div class="chat-widget">
+        <button class="chat-toggle-btn" id="chatToggleBtn">
+            <i class="fas fa-comment-dots"></i>
+        </button>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <h3>TVT Assistant</h3>
+                <button class="chat-close" id="chatCloseBtn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="chat-msg bot">Chào bạn! Tôi có thể tư vấn gì cho bạn về giải pháp Digital Marketing của TVT?</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Nhập tin nhắn..." autocomplete="off">
+                <button id="chatSendBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Đoạn mã tích hợp Chatbot qua AI tùy chỉnh OpenAI-Compatible -->
+    <script type="module">
+        import OpenAI from "https://esm.sh/openai";
+
+        // Khởi tạo SDK và ghi đè các cấu hình theo yêu cầu
+        const openai = new OpenAI({
+            apiKey: "sk-4bd27113b7dc78d1-lh6jld-f4f9c69f",
+            baseURL: "https://9router.vuhai.io.vn/v1",
+            dangerouslyAllowBrowser: true // Bắt buộc khi dùng SDK trên frontend HTML
+        });
+
+        // Khởi tạo các phần tử giao diện
+        const chatToggleBtn = document.getElementById('chatToggleBtn');
+        const chatWindow = document.getElementById('chatWindow');
+        const chatCloseBtn = document.getElementById('chatCloseBtn');
+        const chatBody = document.getElementById('chatBody');
+        const chatInput = document.getElementById('chatInput');
+        const chatSendBtn = document.getElementById('chatSendBtn');
+
+        // Bật/tắt cửa sổ chat
+        chatToggleBtn.addEventListener('click', () => {
+            chatWindow.classList.toggle('active');
+            if(chatWindow.classList.contains('active')) {
+                chatInput.focus();
+            }
+        });
+
+        chatCloseBtn.addEventListener('click', () => {
+            chatWindow.classList.remove('active');
+        });
+
+        // Thêm tin nhắn vào khung chat
+        function appendMessage(sender, text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('chat-msg', sender);
+            msgDiv.textContent = text;
+            chatBody.appendChild(msgDiv);
+            chatBody.scrollTop = chatBody.scrollHeight; // Cuộn xuống dưới cùng
+        }
+
+        // Tạo mảng lưu trữ lịch sử hội thoại
+        let messageHistory = [
+            { role: "system", content: "Bạn là TVT Assistant, chuyên viên tư vấn các giải pháp E-Commerce, Digital Marketing chuyên nghiệp của TVT. Hãy trả lời ngắn gọn, thân thiện và lịch sự." }
+        ];
+
+        // Gửi và nhận tin nhắn
+        async function sendMessage() {
+            const text = chatInput.value.trim();
+            if(!text) return;
+
+            // Hiển thị câu do người dùng gõ
+            appendMessage('user', text);
+            chatInput.value = '';
+
+            // Hiển thị trạng thái chờ
+            const loadingDiv = document.createElement('div');
+            loadingDiv.classList.add('chat-msg', 'bot');
+            loadingDiv.textContent = 'Đang phản hồi...';
+            loadingDiv.id = 'chatLoading';
+            chatBody.appendChild(loadingDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // Cập nhật lịch sử gửi lên
+            messageHistory.push({ role: "user", content: text });
+
+            try {
+                const response = await openai.chat.completions.create({
+                    model: "ces-chatbot-gpt-5.4",
+                    messages: messageHistory,
+                });
+                
+                const botReply = response.choices[0].message.content;
+                messageHistory.push({ role: "assistant", content: botReply });
+
+                // Xoá thông báo chờ và in ra phản hồi thực tế
+                document.getElementById('chatLoading').remove();
+                appendMessage('bot', botReply);
+
+            } catch (error) {
+                console.error("Lỗi api:", error);
+                document.getElementById('chatLoading').remove();
+                appendMessage('bot', 'Xin lỗi, tôi đang bị gián đoạn kết nối. Vui lòng thử lại.');
+            }
+        }
+
+        // Hỗ trợ gửi tin bằng phím Enter
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        chatSendBtn.addEventListener('click', sendMessage);
+    </script>
 </body>
 </html>
